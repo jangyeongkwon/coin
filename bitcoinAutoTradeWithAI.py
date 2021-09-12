@@ -4,8 +4,8 @@ import datetime
 import schedule
 from fbprophet import Prophet
 
-access = "your-access"
-secret = "your-secret"
+access = "Kdy2AJbZhOrcvpBsxil3CXP0xOoZCwRbSX2Q0lcu"
+secret = "exkoApgxeyeHRi0jxB9p6g7JcQk6xxjxkPNw2uSe"
 
 def get_target_price(ticker, k):
     """변동성 돌파 전략으로 매수 목표가 조회"""
@@ -52,8 +52,8 @@ def predict_price(ticker):
         closeDf = forecast[forecast['ds'] == data.iloc[-1]['ds'].replace(hour=9)]
     closeValue = closeDf['yhat'].values[0]
     predicted_close_price = closeValue
-predict_price("KRW-upp")
-schedule.every().hour.do(lambda: predict_price("KRW-upp"))
+predict_price("KRW-xrp")
+schedule.every().hour.do(lambda: predict_price("KRW-xrp"))
 
 # 로그인
 upbit = pyupbit.Upbit(access, secret)
@@ -63,21 +63,21 @@ print("autotrade start")
 while True:
     try:
         now = datetime.datetime.now()
-        start_time = get_start_time("KRW-upp")
+        start_time = get_start_time("KRW-xrp")
         end_time = start_time + datetime.timedelta(days=1)
         schedule.run_pending()
 
         if start_time < now < end_time - datetime.timedelta(seconds=10):
-            target_price = get_target_price("KRW-upp", 0.5)
-            current_price = get_current_price("KRW-upp")
+            target_price = get_target_price("KRW-xrp", -0.2)
+            current_price = get_current_price("KRW-xrp")
             if target_price < current_price and current_price < predicted_close_price:
                 krw = get_balance("KRW")
                 if krw > 5000:
-                    upbit.buy_market_order("KRW-upp", krw*0.9995)
+                    upbit.buy_market_order("KRW-xrp", krw*0.9995)
         else:
-            KRW-upp = get_balance("KRW-upp")
-            if KRW-upp > 20:
-                upbit.sell_market_order("KRW-upp", KRW-upp*0.9995)
+            xrp = get_balance("KRW-xrp")
+            if KRW-xrp > 3.8:
+                upbit.sell_market_order("KRW-xrp", KRW-xrp*0.9995)
         time.sleep(1)
     except Exception as e:
         print(e)
