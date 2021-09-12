@@ -40,20 +40,20 @@ print("autotrade start")
 while True:
     try:
         now = datetime.datetime.now()
-        start_time = get_start_time("KRW-ELF")
+        start_time = get_start_time("KRW-xrp")
         end_time = start_time + datetime.timedelta(days=1)
 
         if start_time < now < end_time - datetime.timedelta(seconds=10):
-            target_price = get_target_price("KRW-ELF", -0.5)
-            current_price = get_current_price("KRW-ELF")
+            target_price = get_target_price("KRW-xrp", 0.1)
+            current_price = get_current_price("KRW-xrp")
             if target_price < current_price:
                 krw = get_balance("KRW")
                 if krw > 5000:
-                    upbit.buy_market_order("KRW-ELF", krw*0.9995)
+                    upbit.buy_market_order("KRW-xrp", krw*0.9995)
         else:
-            KRW-ELF = get_balance("KRW-ELF")
-            if KRW-ELF > 5.5:
-                upbit.sell_market_order("KRW-ELF", KRW-ELF*0.9995)
+            xrp = get_balance("KRW-xrp")
+            if KRW-xrp > 3.8:
+                upbit.sell_market_order("KRW-xrp", KRW-xrp*0.9995)
         time.sleep(1)
     except Exception as e:
         print(e)
